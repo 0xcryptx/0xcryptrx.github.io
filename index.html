@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Yassein Mahmoud - Portfolio</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1596,6 +1596,52 @@
                 left: -20px;
                 width: 10px;
             }
+
+            /* Mobile touch optimizations */
+            * {
+                -webkit-tap-highlight-color: transparent;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            /* Allow text selection for form inputs and textareas */
+            input, textarea {
+                -webkit-user-select: text;
+                -moz-user-select: text;
+                -ms-user-select: text;
+                user-select: text;
+            }
+
+            /* Improve touch targets */
+            .project-btn, .social-btn, .submit-btn, .mobile-menu-toggle {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Reduce animation complexity on mobile */
+            .experience-card:hover,
+            .education-item:hover,
+            .skill-category:hover,
+            .language-card:hover,
+            .contact-info:hover,
+            .map-container:hover {
+                transform: none;
+                box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+            }
+
+            /* Only apply hover effects on touch devices when mobile-hover class is present */
+            .experience-card.mobile-hover,
+            .education-item.mobile-hover,
+            .skill-category.mobile-hover,
+            .language-card.mobile-hover,
+            .contact-info.mobile-hover,
+            .map-container.mobile-hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+            }
         }
 
         /* Smooth Scrolling */
@@ -2107,49 +2153,89 @@
             });
         });
 
-        // Mobile hover effects
-        function addMobileHoverEffects() {
-            const hoverElements = document.querySelectorAll('.experience-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn');
-            
-            hoverElements.forEach(element => {
-                element.addEventListener('touchstart', function(e) {
-                    this.classList.add('mobile-hover');
-                });
+        // Mobile touch optimization
+        function optimizeMobileTouch() {
+            // Only apply touch optimizations on mobile devices
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                const touchElements = document.querySelectorAll('.experience-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn');
                 
-                element.addEventListener('touchend', function(e) {
-                    setTimeout(() => {
-                        this.classList.remove('mobile-hover');
-                    }, 150);
+                touchElements.forEach(element => {
+                    // Remove any existing touch event listeners
+                    element.removeEventListener('touchstart', handleTouchStart);
+                    element.removeEventListener('touchend', handleTouchEnd);
+                    element.removeEventListener('touchcancel', handleTouchCancel);
+                    
+                    // Add optimized touch handlers
+                    element.addEventListener('touchstart', handleTouchStart, { passive: true });
+                    element.addEventListener('touchend', handleTouchEnd, { passive: true });
+                    element.addEventListener('touchcancel', handleTouchCancel, { passive: true });
                 });
-                
-                element.addEventListener('touchcancel', function(e) {
-                    this.classList.remove('mobile-hover');
-                });
-            });
+            }
         }
 
-        // Initialize mobile hover effects
-        addMobileHoverEffects();
+        // Touch event handlers
+        function handleTouchStart(e) {
+            // Prevent default only for non-interactive elements
+            if (!e.target.closest('a, button, input, textarea')) {
+                e.preventDefault();
+            }
+            this.classList.add('mobile-hover');
+        }
 
-        // Auto-deselect project buttons after click
-        document.querySelectorAll('.project-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                setTimeout(() => {
-                    this.blur();
-                }, 100);
-            });
-        });
-
-        // SnatchIt button popup
-        document.getElementById('snatchitBtn').addEventListener('click', function() {
-            const popup = document.getElementById('snatchitPopup');
-            popup.classList.add('show');
-            
-            // Hide popup after 2 seconds
+        function handleTouchEnd(e) {
+            // Small delay to show the hover effect
             setTimeout(() => {
-                popup.classList.remove('show');
-            }, 2000);
-        });
+                this.classList.remove('mobile-hover');
+            }, 100);
+        }
+
+        function handleTouchCancel(e) {
+            this.classList.remove('mobile-hover');
+        }
+
+        // Initialize mobile touch optimization
+        optimizeMobileTouch();
+
+        // Optimized button handlers
+        function initializeButtonHandlers() {
+            // Auto-deselect project buttons after click
+            document.querySelectorAll('.project-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Prevent any default behavior that might interfere
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Remove focus immediately
+                    this.blur();
+                    
+                    // Remove mobile hover class
+                    this.classList.remove('mobile-hover');
+                }, { passive: false });
+            });
+
+            // SnatchIt button popup with improved touch handling
+            const snatchitBtn = document.getElementById('snatchitBtn');
+            if (snatchitBtn) {
+                snatchitBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const popup = document.getElementById('snatchitPopup');
+                    popup.classList.add('show');
+                    
+                    // Remove mobile hover class
+                    this.classList.remove('mobile-hover');
+                    
+                    // Hide popup after 2 seconds
+                    setTimeout(() => {
+                        popup.classList.remove('show');
+                    }, 2000);
+                }, { passive: false });
+            }
+        }
+
+        // Initialize button handlers
+        initializeButtonHandlers();
 
         // Profile image modal
         const profileImageBtn = document.getElementById('profileImageBtn');
@@ -2181,31 +2267,50 @@
             }
         });
 
-        // Mobile menu toggle
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const mobileDropdown = document.querySelector('.mobile-dropdown');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
+        // Mobile menu toggle with improved touch handling
+        function initializeMobileMenu() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileDropdown = document.querySelector('.mobile-dropdown');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
 
-        mobileMenuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileDropdown.classList.toggle('show');
-        });
-
-        // Close mobile menu when clicking on a link
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuToggle.classList.remove('active');
-                mobileDropdown.classList.remove('show');
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mobileMenuToggle.contains(e.target) && !mobileDropdown.contains(e.target)) {
-                mobileMenuToggle.classList.remove('active');
-                mobileDropdown.classList.remove('show');
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    this.classList.toggle('active');
+                    mobileDropdown.classList.toggle('show');
+                    
+                    // Remove mobile hover class
+                    this.classList.remove('mobile-hover');
+                }, { passive: false });
             }
-        });
+
+            // Close mobile menu when clicking on a link
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    mobileMenuToggle.classList.remove('active');
+                    mobileDropdown.classList.remove('show');
+                    
+                    // Remove mobile hover class
+                    this.classList.remove('mobile-hover');
+                }, { passive: false });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileMenuToggle.contains(e.target) && !mobileDropdown.contains(e.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // Initialize mobile menu
+        initializeMobileMenu();
 
         // Contact form submission with custom popup
         document.getElementById('contactForm').addEventListener('submit', function(e) {
