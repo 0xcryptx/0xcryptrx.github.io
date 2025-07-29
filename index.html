@@ -1621,6 +1621,22 @@
                 min-width: 44px;
             }
 
+            /* Ensure anchor links work properly on mobile */
+            .project-btn.amalak-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                cursor: pointer;
+                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
+            }
+
+            .project-btn.amalak-btn:active {
+                background: #007bff;
+                color: white;
+                transform: translateY(-1px);
+            }
+
             /* Reduce animation complexity on mobile */
             .experience-card:hover,
             .education-item:hover,
@@ -1842,7 +1858,7 @@
                             <li>Enhanced digital presence and client engagement</li>
                         </ul>
                         <div class="project-button-container">
-                            <a href="https://amalak.ae" target="_blank" class="project-btn">
+                            <a href="https://amalak.ae" target="_blank" class="project-btn amalak-btn" rel="noopener noreferrer">
                                 <span class="btn-icon">🌐</span>
                                 <span class="btn-text">Website</span>
                             </a>
@@ -2157,7 +2173,7 @@
         function optimizeMobileTouch() {
             // Only apply touch optimizations on mobile devices
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                const touchElements = document.querySelectorAll('.experience-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn');
+                const touchElements = document.querySelectorAll('.experience-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn:not(.amalak-btn)');
                 
                 touchElements.forEach(element => {
                     // Remove any existing touch event listeners
@@ -2198,8 +2214,8 @@
 
         // Optimized button handlers
         function initializeButtonHandlers() {
-            // Auto-deselect project buttons after click
-            document.querySelectorAll('.project-btn').forEach(button => {
+            // Handle project buttons (excluding anchor links)
+            document.querySelectorAll('.project-btn:not(a)').forEach(button => {
                 button.addEventListener('click', function(e) {
                     // Prevent any default behavior that might interfere
                     e.preventDefault();
@@ -2211,6 +2227,20 @@
                     // Remove mobile hover class
                     this.classList.remove('mobile-hover');
                 }, { passive: false });
+            });
+
+            // Handle project anchor links (like Amalak website)
+            document.querySelectorAll('.project-btn.amalak-btn').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't prevent default - let the link work normally
+                    // Just clean up mobile hover class
+                    this.classList.remove('mobile-hover');
+                    
+                    // Small delay to ensure the link works
+                    setTimeout(() => {
+                        this.blur();
+                    }, 50);
+                }, { passive: true });
             });
 
             // SnatchIt button popup with improved touch handling
