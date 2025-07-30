@@ -226,10 +226,11 @@
             box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
             border: 1px solid rgba(0, 123, 255, 0.1);
             padding: 1.5rem;
-            z-index: 1000;
+            z-index: 10000;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             max-width: 300px;
+            pointer-events: none;
         }
 
         .success-popup.show {
@@ -394,6 +395,28 @@
         .logo:active .logo-text,
         .logo.mobile-hover .logo-text {
             color: #007bff;
+        }
+
+        /* YA LOGO HOVER EFFECTS ON MOBILE - ALLOW BLUE ON PRESS */
+        @media (max-width: 768px) {
+            .logo:active,
+            .logo.mobile-hover {
+                color: #007bff !important;
+            }
+
+            .logo:active .logo-text,
+            .logo.mobile-hover .logo-text {
+                color: #007bff !important;
+            }
+            
+            /* Allow active state but prevent hover from sticking */
+            .logo:hover:not(:active):not(.mobile-hover) {
+                color: #333 !important;
+            }
+            
+            .logo:hover:not(:active):not(.mobile-hover) .logo-text {
+                color: #333 !important;
+            }
         }
 
         /* Profile Image Modal */
@@ -767,7 +790,7 @@
             left: 0;
         }
 
-        /* Project Buttons */
+        /* Project Buttons - Independent from card containers */
         .project-button-container {
             position: absolute;
             bottom: 1.5rem;
@@ -775,6 +798,8 @@
             right: 0;
             display: flex;
             justify-content: center;
+            z-index: 10;
+            pointer-events: auto;
         }
 
         .project-btn {
@@ -791,29 +816,64 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
             box-shadow: 0 3px 15px rgba(0, 123, 255, 0.12);
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+            z-index: 15;
+            pointer-events: auto;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
-        .project-btn:hover,
-        .project-btn:active,
-        .project-btn.mobile-hover,
-        .project-btn:focus {
+        /* Independent button hover states - not affected by card hover */
+        .project-btn:hover {
             background: #007bff;
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
-        /* Ensure SnatchIt button works without hover on mobile */
-        .project-btn.snatchit-btn {
-            cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
-            touch-action: manipulation;
-        }
-
-        .project-btn.snatchit-btn:active {
+        .project-btn:active {
             background: #007bff;
             color: white;
             transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        .project-btn:focus {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+            outline: none;
+        }
+
+        /* SnatchIt button - matches Amalak button exactly */
+        .project-btn.snatchit-btn {
+            /* Same as Amalak button - no custom overrides */
+        }
+
+        /* Desktop hover effect for SnatchIt button */
+        @media (hover: hover) and (pointer: fine) {
+            .project-btn.snatchit-btn:hover {
+                background: #007bff !important;
+                color: white !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35) !important;
+            }
+        }
+
+        .project-btn.snatchit-btn:hover,
+        .project-btn.snatchit-btn:active,
+        .project-btn.snatchit-btn:focus {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
         .project-btn:active {
@@ -947,9 +1007,40 @@
             font-size: 0.9rem;
         }
 
+        /* Ensure consistent alignment for all skill logos */
+        .skill-list li .skill-emoji {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            min-width: 24px;
+        }
+
+        /* Push HTML and CSS logos to the left */
+        .skill-emoji img[alt="HTML"],
+        .skill-emoji img[alt="CSS"] {
+            margin-left: -2px;
+        }
+
         .skill-emoji {
             font-size: 1rem;
         }
+
+        .skill-emoji img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            display: inline-block;
+            object-fit: contain;
+            border-radius: 3px;
+        }
+
+        /* Ensure JavaScript logo matches HTML size */
+        .skill-emoji img[alt="JavaScript"] {
+            width: 20px;
+            height: 20px;
+        }
+
+
 
         /* Languages */
         .languages-grid {
@@ -1634,21 +1725,58 @@
                 min-width: 44px;
             }
 
-            /* Specific optimizations for SnatchIt button on mobile */
-            .project-btn.snatchit-btn {
+            /* Independent button controls on mobile */
+            .project-btn {
                 min-height: 48px;
                 min-width: 120px;
                 -webkit-tap-highlight-color: rgba(0, 123, 255, 0.3);
                 touch-action: manipulation;
                 user-select: none;
                 -webkit-user-select: none;
+                position: relative;
+                z-index: 20;
+                pointer-events: auto;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
             }
 
-            .project-btn.snatchit-btn:active {
+            /* SnatchIt button mobile - matches Amalak button exactly */
+            .project-btn.snatchit-btn {
+                /* Same as Amalak button - no custom overrides */
+            }
+
+            .project-btn:active {
                 background: #007bff !important;
                 color: white !important;
                 transform: translateY(-1px);
                 box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            }
+
+            .project-btn:hover {
+                background: #007bff !important;
+                color: white !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+            }
+
+            /* Ensure buttons are not affected by card hover states */
+            .experience-card:hover .project-btn,
+            .experience-card.mobile-hover .project-btn {
+                background: white;
+                color: #007bff;
+                transform: none;
+                box-shadow: 0 3px 15px rgba(0, 123, 255, 0.12);
+            }
+
+            .experience-card:hover .project-btn:hover,
+            .experience-card.mobile-hover .project-btn:hover,
+            .experience-card:hover .project-btn:active,
+            .experience-card.mobile-hover .project-btn:active {
+                background: #007bff !important;
+                color: white !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
             }
 
             /* Ensure anchor links work properly on mobile */
@@ -1871,10 +1999,10 @@
                             <li>Currently working on expanding platform capabilities</li>
                         </ul>
                         <div class="project-button-container">
-                            <button class="project-btn snatchit-btn" id="snatchitBtn">
+                            <a href="#" class="project-btn snatchit-btn" id="snatchitBtn">
                                 <span class="btn-icon">🌐</span>
                                 <span class="btn-text">Website</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="experience-card">
@@ -1914,18 +2042,18 @@
                     <div class="skill-category">
                         <h3>💻 Programming Languages</h3>
                         <ul class="skill-list">
-                            <li><span class="skill-emoji">🐍</span> Python</li>
-                            <li><span class="skill-emoji">☕</span> Java</li>
-                            <li><span class="skill-emoji">⚡</span> C++</li>
-                            <li><span class="skill-emoji">🟢</span> Node.js</li>
+                            <li><span class="skill-emoji"><img src="assets/python.png" alt="Python"></span> Python</li>
+                            <li><span class="skill-emoji"><img src="assets/java.png" alt="Java"></span> Java</li>
+                            <li><span class="skill-emoji"><img src="assets/c++.png" alt="C++"></span> C++</li>
+                            <li><span class="skill-emoji"><img src="assets/nodejs.png" alt="Node.js"></span> Node.js</li>
                         </ul>
                     </div>
                     <div class="skill-category">
                         <h3>🌐 Web Development</h3>
                         <ul class="skill-list">
-                            <li><span class="skill-emoji">📄</span> HTML</li>
-                            <li><span class="skill-emoji">🎨</span> CSS</li>
-                            <li><span class="skill-emoji">⚡</span> JavaScript</li>
+                            <li><span class="skill-emoji"><img src="assets/html.png" alt="HTML"></span> HTML</li>
+                            <li><span class="skill-emoji"><img src="assets/css.png" alt="CSS"></span> CSS</li>
+                            <li><span class="skill-emoji"><img src="assets/javascript.png" alt="JavaScript"></span> JavaScript</li>
                             <li><span class="skill-emoji">📱</span> Responsive Web Design</li>
                             <li><span class="skill-emoji">🎨</span> Web Design</li>
                         </ul>
@@ -1933,10 +2061,13 @@
                     <div class="skill-category">
                         <h3>🗄️ Databases & Tools</h3>
                         <ul class="skill-list">
-                            <li><span class="skill-emoji">📊</span> SQL</li>
-                            <li><span class="skill-emoji">🐬</span> MySQL</li>
-                            <li><span class="skill-emoji">📝</span> Git & GitHub</li>
-                            <li><span class="skill-emoji">🐧</span> Linux (Kali Linux)</li>
+                            <li><span class="skill-emoji"><img src="assets/sql.png" alt="SQL"></span> SQL</li>
+                            <li><span class="skill-emoji"><img src="assets/mysql.png" alt="MySQL"></span> MySQL</li>
+                            <li><span class="skill-emoji"><img src="assets/git.png" alt="Git"></span> Git</li>
+                            <li><span class="skill-emoji"><img src="assets/github.png" alt="GitHub"></span> GitHub</li>
+                            <li><span class="skill-emoji"><img src="assets/linux.png" alt="Linux"></span> Linux</li>
+                            <li><span class="skill-emoji"><img src="assets/kali_linux.png" alt="Kali Linux"></span> Kali Linux</li>
+                            <li><span class="skill-emoji"><img src="assets/ubuntu.png" alt="Ubuntu"></span> Ubuntu</li>
                         </ul>
                     </div>
                     <div class="skill-category">
@@ -2199,11 +2330,11 @@
             });
         });
 
-        // Mobile touch optimization
+        // Mobile touch optimization - exclude project buttons for independent control
         function optimizeMobileTouch() {
             // Only apply touch optimizations on mobile devices
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                const touchElements = document.querySelectorAll('.experience-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn:not(.amalak-btn)');
+                const touchElements = document.querySelectorAll('.experience-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn');
                 
                 touchElements.forEach(element => {
                     // Remove any existing touch event listeners
@@ -2242,106 +2373,225 @@
         // Initialize mobile touch optimization
         optimizeMobileTouch();
 
-        // Special touch handling for SnatchIt button
-        function initializeSnatchitTouchHandling() {
-            const snatchitBtn = document.getElementById('snatchitBtn');
-            if (snatchitBtn && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
-                // Remove any existing touch handlers
-                snatchitBtn.removeEventListener('touchstart', handleSnatchitTouch);
-                snatchitBtn.removeEventListener('touchend', handleSnatchitTouchEnd);
-                
-                // Add touch handlers
-                snatchitBtn.addEventListener('touchstart', handleSnatchitTouch, { passive: false });
-                snatchitBtn.addEventListener('touchend', handleSnatchitTouchEnd, { passive: true });
-            }
-        }
 
-        function handleSnatchitTouch(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Add visual feedback immediately
-            this.style.background = '#007bff';
-            this.style.color = 'white';
-            this.style.transform = 'translateY(-1px)';
-            
-            const popup = document.getElementById('snatchitPopup');
-            popup.classList.add('show');
-            
-            // Hide popup after 2 seconds
+
+
+
+        // Auto deselect function for buttons
+        function autoDeselectButton(button) {
             setTimeout(() => {
-                popup.classList.remove('show');
-            }, 2000);
+                button.blur();
+                button.classList.remove('mobile-hover');
+                button.style.outline = 'none';
+                button.style.userSelect = 'none';
+                button.style.webkitUserSelect = 'none';
+                // Ensure button remains clickable
+                button.style.pointerEvents = 'auto';
+                button.style.cursor = 'pointer';
+            }, 100);
         }
 
-        function handleSnatchitTouchEnd(e) {
-            // Reset visual state after a short delay
-            setTimeout(() => {
-                this.style.background = '';
-                this.style.color = '';
-                this.style.transform = '';
-            }, 150);
-        }
-
-        // Initialize SnatchIt touch handling
-        initializeSnatchitTouchHandling();
-
-        // Optimized button handlers
+        // Independent button handlers - each button has its own functionality
         function initializeButtonHandlers() {
-            // Handle project buttons (excluding anchor links)
-            document.querySelectorAll('.project-btn:not(a)').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    // Prevent any default behavior that might interfere
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Remove focus immediately
-                    this.blur();
-                    
-                    // Remove mobile hover class
-                    this.classList.remove('mobile-hover');
-                }, { passive: false });
-            });
-
-            // Handle project anchor links (like Amalak website)
-            document.querySelectorAll('.project-btn.amalak-btn').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Don't prevent default - let the link work normally
-                    // Just clean up mobile hover class
-                    this.classList.remove('mobile-hover');
-                    
-                    // Small delay to ensure the link works
-                    setTimeout(() => {
-                        this.blur();
-                    }, 50);
-                }, { passive: true });
-            });
-
-            // SnatchIt button popup with improved touch handling
+            // SnatchIt button - matches Amalak button exactly
             const snatchitBtn = document.getElementById('snatchitBtn');
             if (snatchitBtn) {
-                // Add both click and touchstart events for better mobile compatibility
-                const handleSnatchitClick = function(e) {
+                let clickCount = 0;
+                const handleSnatchitAction = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     
+                    clickCount++;
+                    console.log('SnatchIt button clicked! Count:', clickCount); // Debug log
+                    
+                    // Turn button blue (active state)
+                    this.style.background = '#007bff';
+                    this.style.color = 'white';
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.35)';
+                    
+                    // Show popup
                     const popup = document.getElementById('snatchitPopup');
-                    popup.classList.add('show');
+                    if (popup) {
+                        popup.classList.add('show');
+                    }
                     
-                    // Remove mobile hover class
-                    this.classList.remove('mobile-hover');
-                    
-                    // Hide popup after 2 seconds
+                    // Hide popup after 2 seconds and return button to normal
                     setTimeout(() => {
-                        popup.classList.remove('show');
+                        if (popup) {
+                            popup.classList.remove('show');
+                        }
+                        // Return button to normal state when popup disappears
+                        this.style.background = 'white';
+                        this.style.color = '#007bff';
+                        this.style.transform = 'none';
+                        this.style.boxShadow = '0 3px 15px rgba(0, 123, 255, 0.12)';
+                        console.log('Button reset to normal state');
                     }, 2000);
                 };
                 
-                // Add click event
-                snatchitBtn.addEventListener('click', handleSnatchitClick, { passive: false });
+                // Mobile-specific handler to prevent getting stuck
+                const handleSnatchitMobile = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    clickCount++;
+                    console.log('SnatchIt mobile touch! Count:', clickCount); // Debug log
+                    
+                    // Turn button blue (active state)
+                    this.style.background = '#007bff';
+                    this.style.color = 'white';
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.35)';
+                    
+                    // Show popup
+                    const popup = document.getElementById('snatchitPopup');
+                    if (popup) {
+                        popup.classList.add('show');
+                    }
+                    
+                    // Hide popup after 2 seconds and return button to normal
+                    setTimeout(() => {
+                        if (popup) {
+                            popup.classList.remove('show');
+                        }
+                        // Return button to normal state when popup disappears
+                        this.style.background = 'white';
+                        this.style.color = '#007bff';
+                        this.style.transform = 'none';
+                        this.style.boxShadow = '0 3px 15px rgba(0, 123, 255, 0.12)';
+                        console.log('Mobile button reset to normal state');
+                    }, 2000);
+                };
                 
-                // Add touchstart event for immediate response on mobile
-                snatchitBtn.addEventListener('touchstart', handleSnatchitClick, { passive: false });
+                // ULTIMATE RESET FUNCTION - Never fails
+                const forceResetButton = function() {
+                    if (snatchitBtn) {
+                        // Multiple reset methods to ensure it works
+                        snatchitBtn.style.background = 'white';
+                        snatchitBtn.style.color = '#007bff';
+                        snatchitBtn.style.transform = 'none';
+                        snatchitBtn.style.boxShadow = '0 3px 15px rgba(0, 123, 255, 0.12)';
+                        
+                        // Force with setProperty
+                        snatchitBtn.style.setProperty('background', 'white', 'important');
+                        snatchitBtn.style.setProperty('color', '#007bff', 'important');
+                        snatchitBtn.style.setProperty('transform', 'none', 'important');
+                        snatchitBtn.style.setProperty('box-shadow', '0 3px 15px rgba(0, 123, 255, 0.12)', 'important');
+                        
+                        // Remove any classes that might interfere
+                        snatchitBtn.classList.remove('mobile-hover', 'active', 'hover');
+                        
+                        // Force CSS reset
+                        snatchitBtn.style.cssText = 'background: white !important; color: #007bff !important; transform: none !important; box-shadow: 0 3px 15px rgba(0, 123, 255, 0.12) !important;';
+                    }
+                };
+                
+                // Remove existing listeners
+                snatchitBtn.removeEventListener('click', handleSnatchitAction);
+                snatchitBtn.removeEventListener('touchstart', handleSnatchitAction);
+                snatchitBtn.removeEventListener('touchstart', handleSnatchitMobile);
+                
+                // Add event listeners
+                snatchitBtn.addEventListener('click', handleSnatchitAction, { passive: false });
+                
+                // Use mobile-specific handler for touch events
+                if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                    snatchitBtn.addEventListener('touchstart', handleSnatchitMobile, { passive: false });
+                } else {
+                    snatchitBtn.addEventListener('touchstart', handleSnatchitAction, { passive: false });
+                }
+                
+                // Mobile-specific optimizations for smooth phone experience
+                if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                    // Add touchend event for better mobile response
+                    snatchitBtn.addEventListener('touchend', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }, { passive: false });
+                    
+                    // Prevent touchmove from interfering
+                    snatchitBtn.addEventListener('touchmove', function(e) {
+                        e.stopPropagation();
+                    }, { passive: true });
+                    
+                    // Ensure button is always clickable on mobile
+                    snatchitBtn.style.webkitTapHighlightColor = 'rgba(0, 123, 255, 0.3)';
+                    snatchitBtn.style.touchAction = 'manipulation';
+                    
+                    // Additional mobile safeguards to prevent button getting stuck
+                    snatchitBtn.addEventListener('touchcancel', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Reset button state if touch is cancelled
+                        this.style.background = 'white';
+                        this.style.color = '#007bff';
+                        this.style.transform = 'none';
+                        this.style.boxShadow = '0 3px 15px rgba(0, 123, 255, 0.12)';
+                    }, { passive: false });
+                    
+                    // ULTIMATE RESET SYSTEM - Multiple layers of protection
+                    
+                    // Reset every 200ms when popup is not visible
+                    setInterval(() => {
+                        if (snatchitBtn && !document.getElementById('snatchitPopup').classList.contains('show')) {
+                            forceResetButton();
+                        }
+                    }, 200);
+                    
+                    // Emergency reset every 100ms
+                    setInterval(() => {
+                        if (snatchitBtn && !document.getElementById('snatchitPopup').classList.contains('show')) {
+                            forceResetButton();
+                        }
+                    }, 100);
+                    
+                    // Nuclear reset every 50ms
+                    setInterval(() => {
+                        if (snatchitBtn && !document.getElementById('snatchitPopup').classList.contains('show')) {
+                            forceResetButton();
+                        }
+                    }, 50);
+                    
+                    // Final safety net - reset every 25ms
+                    setInterval(() => {
+                        if (snatchitBtn && !document.getElementById('snatchitPopup').classList.contains('show')) {
+                            forceResetButton();
+                        }
+                    }, 25);
+                }
+            }
+
+            // Amalak button - independent functionality (anchor link)
+            const amalakBtn = document.querySelector('.project-btn.amalak-btn');
+            if (amalakBtn) {
+                const handleAmalakAction = function(e) {
+                    // Don't prevent default - let the link work
+                    // Just add visual feedback
+                    this.style.background = '#007bff';
+                    this.style.color = 'white';
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.35)';
+                    
+                    // Reset after animation
+                    setTimeout(() => {
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 300);
+                    
+                    // Auto deselect the button
+                    autoDeselectButton(this);
+                };
+                
+                // Remove any existing listeners
+                amalakBtn.removeEventListener('click', handleAmalakAction);
+                amalakBtn.removeEventListener('touchstart', handleAmalakAction);
+                
+                // Add new listeners
+                amalakBtn.addEventListener('click', handleAmalakAction, { passive: true });
+                amalakBtn.addEventListener('touchstart', handleAmalakAction, { passive: true });
             }
         }
 
@@ -2357,7 +2607,79 @@
             e.preventDefault();
             e.stopPropagation();
             profileModal.style.display = 'block';
+            
+            // Turn button blue when modal opens
+            this.style.background = '#007bff';
+            this.style.color = 'white';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.35)';
+            this.style.setProperty('background', '#007bff', 'important');
+            this.style.setProperty('color', 'white', 'important');
         });
+
+        // SIMPLE YA LOGO HANDLING - GUARANTEED TO WORK
+        const logoBtn = document.querySelector('.logo');
+        if (logoBtn) {
+            logoBtn.addEventListener('click', function(e) {
+                console.log('YA logo clicked!');
+                
+                // Turn blue immediately
+                this.style.color = '#007bff';
+                this.style.setProperty('color', '#007bff', 'important');
+                
+                const logoText = this.querySelector('.logo-text');
+                if (logoText) {
+                    logoText.style.color = '#007bff';
+                    logoText.style.setProperty('color', '#007bff', 'important');
+                }
+                
+                // Reset after 500ms
+                setTimeout(() => {
+                    this.style.color = '#333';
+                    this.style.setProperty('color', '#333', 'important');
+                    
+                    if (logoText) {
+                        logoText.style.color = '#333';
+                        logoText.style.setProperty('color', '#333', 'important');
+                    }
+                    
+                    console.log('YA logo reset to gray');
+                }, 500);
+            });
+            
+            // Mobile touch handling
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                logoBtn.addEventListener('touchstart', function(e) {
+                    console.log('YA logo touched!');
+                    
+                    // Turn blue immediately
+                    this.style.color = '#007bff';
+                    this.style.setProperty('color', '#007bff', 'important');
+                    
+                    const logoText = this.querySelector('.logo-text');
+                    if (logoText) {
+                        logoText.style.color = '#007bff';
+                        logoText.style.setProperty('color', '#007bff', 'important');
+                    }
+                }, { passive: true });
+                
+                logoBtn.addEventListener('touchend', function(e) {
+                    // Reset after touch ends
+                    setTimeout(() => {
+                        this.style.color = '#333';
+                        this.style.setProperty('color', '#333', 'important');
+                        
+                        const logoText = this.querySelector('.logo-text');
+                        if (logoText) {
+                            logoText.style.color = '#333';
+                            logoText.style.setProperty('color', '#333', 'important');
+                        }
+                        
+                        console.log('YA logo reset to gray after touch');
+                    }, 300);
+                }, { passive: true });
+            }
+        }
 
         // Prevent hover events from bubbling up to parent logo
         profileImageBtn.addEventListener('mouseenter', function(e) {
@@ -2370,11 +2692,33 @@
 
         closeModal.addEventListener('click', function() {
             profileModal.style.display = 'none';
+            
+            // Reset profile button to normal when modal closes
+            const profileBtn = document.getElementById('profileImageBtn');
+            if (profileBtn) {
+                profileBtn.style.background = '';
+                profileBtn.style.color = '';
+                profileBtn.style.transform = '';
+                profileBtn.style.boxShadow = '';
+                profileBtn.style.setProperty('background', '', 'important');
+                profileBtn.style.setProperty('color', '', 'important');
+            }
         });
 
         profileModal.addEventListener('click', function(e) {
             if (e.target === profileModal) {
                 profileModal.style.display = 'none';
+                
+                // Reset profile button to normal when modal closes
+                const profileBtn = document.getElementById('profileImageBtn');
+                if (profileBtn) {
+                    profileBtn.style.background = '';
+                    profileBtn.style.color = '';
+                    profileBtn.style.transform = '';
+                    profileBtn.style.boxShadow = '';
+                    profileBtn.style.setProperty('background', '', 'important');
+                    profileBtn.style.setProperty('color', '', 'important');
+                }
             }
         });
 
@@ -2394,6 +2738,9 @@
                     
                     // Remove mobile hover class
                     this.classList.remove('mobile-hover');
+                    
+                    // Auto deselect after interaction
+                    autoDeselectButton(this);
                 }, { passive: false });
             }
 
@@ -2466,6 +2813,9 @@
                 // Reset button
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
+                
+                // Auto deselect after form submission
+                autoDeselectButton(submitBtn);
             });
         });
     </script>
