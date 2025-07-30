@@ -803,6 +803,19 @@
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
+        /* Ensure SnatchIt button works without hover on mobile */
+        .project-btn.snatchit-btn {
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
+            touch-action: manipulation;
+        }
+
+        .project-btn.snatchit-btn:active {
+            background: #007bff;
+            color: white;
+            transform: translateY(-1px);
+        }
+
         .project-btn:active {
             transform: translateY(0);
         }
@@ -1621,6 +1634,23 @@
                 min-width: 44px;
             }
 
+            /* Specific optimizations for SnatchIt button on mobile */
+            .project-btn.snatchit-btn {
+                min-height: 48px;
+                min-width: 120px;
+                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.3);
+                touch-action: manipulation;
+                user-select: none;
+                -webkit-user-select: none;
+            }
+
+            .project-btn.snatchit-btn:active {
+                background: #007bff !important;
+                color: white !important;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            }
+
             /* Ensure anchor links work properly on mobile */
             .project-btn.amalak-btn {
                 display: flex;
@@ -2212,6 +2242,50 @@
         // Initialize mobile touch optimization
         optimizeMobileTouch();
 
+        // Special touch handling for SnatchIt button
+        function initializeSnatchitTouchHandling() {
+            const snatchitBtn = document.getElementById('snatchitBtn');
+            if (snatchitBtn && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+                // Remove any existing touch handlers
+                snatchitBtn.removeEventListener('touchstart', handleSnatchitTouch);
+                snatchitBtn.removeEventListener('touchend', handleSnatchitTouchEnd);
+                
+                // Add touch handlers
+                snatchitBtn.addEventListener('touchstart', handleSnatchitTouch, { passive: false });
+                snatchitBtn.addEventListener('touchend', handleSnatchitTouchEnd, { passive: true });
+            }
+        }
+
+        function handleSnatchitTouch(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Add visual feedback immediately
+            this.style.background = '#007bff';
+            this.style.color = 'white';
+            this.style.transform = 'translateY(-1px)';
+            
+            const popup = document.getElementById('snatchitPopup');
+            popup.classList.add('show');
+            
+            // Hide popup after 2 seconds
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 2000);
+        }
+
+        function handleSnatchitTouchEnd(e) {
+            // Reset visual state after a short delay
+            setTimeout(() => {
+                this.style.background = '';
+                this.style.color = '';
+                this.style.transform = '';
+            }, 150);
+        }
+
+        // Initialize SnatchIt touch handling
+        initializeSnatchitTouchHandling();
+
         // Optimized button handlers
         function initializeButtonHandlers() {
             // Handle project buttons (excluding anchor links)
@@ -2246,7 +2320,8 @@
             // SnatchIt button popup with improved touch handling
             const snatchitBtn = document.getElementById('snatchitBtn');
             if (snatchitBtn) {
-                snatchitBtn.addEventListener('click', function(e) {
+                // Add both click and touchstart events for better mobile compatibility
+                const handleSnatchitClick = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     
@@ -2260,7 +2335,13 @@
                     setTimeout(() => {
                         popup.classList.remove('show');
                     }, 2000);
-                }, { passive: false });
+                };
+                
+                // Add click event
+                snatchitBtn.addEventListener('click', handleSnatchitClick, { passive: false });
+                
+                // Add touchstart event for immediate response on mobile
+                snatchitBtn.addEventListener('touchstart', handleSnatchitClick, { passive: false });
             }
         }
 
