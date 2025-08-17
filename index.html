@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <meta name="color-scheme" content="light">
-    <meta name="theme-color" content="#fafafa">
-    <meta name="msapplication-navbutton-color" content="#fafafa">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Yassein Mahmoud - Portfolio</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +20,6 @@
             background-color: #fafafa;
             position: relative;
             overflow-x: hidden;
-            color-scheme: light;
         }
 
         /* Decorative Background Elements */
@@ -2035,121 +2030,6 @@
         /* Smooth Scrolling */
         html {
             scroll-behavior: smooth;
-            color-scheme: light;
-        }
-
-        /* Force light mode on all elements */
-        * {
-            color-scheme: light !important;
-        }
-
-        /* Override any dark mode styles */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #fafafa !important;
-                color: #333 !important;
-            }
-            
-            html {
-                background-color: #fafafa !important;
-                color: #333 !important;
-            }
-            
-            * {
-                background-color: inherit !important;
-                color: inherit !important;
-            }
-        }
-
-        /* Android-specific optimizations */
-        @supports (-webkit-touch-callout: none) {
-            /* iOS-specific styles - keep existing behavior */
-        }
-
-        @supports not (-webkit-touch-callout: none) {
-            /* Android-specific styles */
-            body {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                text-rendering: optimizeLegibility;
-            }
-
-            /* Ensure smooth scrolling on Android */
-            html {
-                scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            /* Android touch optimizations */
-            * {
-                -webkit-tap-highlight-color: transparent;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                touch-action: manipulation;
-            }
-
-            /* Allow text selection for form inputs on Android */
-            input, textarea {
-                -webkit-user-select: text;
-                -moz-user-select: text;
-                -ms-user-select: text;
-                user-select: text;
-            }
-
-            /* Android-specific button optimizations */
-            .project-btn, .certificate-btn, .social-btn, .submit-btn, .mobile-menu-toggle {
-                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
-                touch-action: manipulation;
-                min-height: 44px;
-                min-width: 44px;
-            }
-
-            /* Android-specific card optimizations */
-            .experience-card, .certificate-card, .education-item, .skill-category, .language-card, .contact-info, .map-container {
-                -webkit-tap-highlight-color: transparent;
-                touch-action: manipulation;
-            }
-
-            /* Android-specific navigation optimizations */
-            .nav-links a, .mobile-nav-links a, .contact-link {
-                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
-                touch-action: manipulation;
-            }
-
-            /* Android-specific logo optimizations */
-            .logo, .logo-image-btn {
-                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
-                touch-action: manipulation;
-            }
-
-            /* Android-specific visual improvements */
-            .mobile-menu-toggle span {
-                background: #333 !important;
-            }
-
-            .mobile-menu-toggle.active span {
-                background: #007bff !important;
-            }
-
-            /* Android-specific form improvements */
-            .form-group input:focus,
-            .form-group textarea:focus {
-                border-color: #007bff !important;
-                background: white !important;
-                box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1) !important;
-            }
-
-            /* Android-specific button improvements */
-            .project-btn:active,
-            .certificate-btn:active,
-            .social-btn:active,
-            .submit-btn:active {
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4) !important;
-            }
         }
     </style>
 </head>
@@ -2739,52 +2619,6 @@
 
         // Initialize mobile touch optimization
         optimizeMobileTouch();
-
-        // Android-specific optimizations
-        function optimizeForAndroid() {
-            // Detect Android
-            const isAndroid = /Android/i.test(navigator.userAgent);
-            
-            if (isAndroid) {
-                // Android-specific touch optimizations
-                const androidElements = document.querySelectorAll('.experience-card, .certificate-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn, .certificate-btn');
-                
-                androidElements.forEach(element => {
-                    // Remove any existing touch event listeners
-                    element.removeEventListener('touchstart', handleAndroidTouchStart);
-                    element.removeEventListener('touchend', handleAndroidTouchEnd);
-                    element.removeEventListener('touchcancel', handleAndroidTouchCancel);
-                    
-                    // Add Android-optimized touch handlers
-                    element.addEventListener('touchstart', handleAndroidTouchStart, { passive: true });
-                    element.addEventListener('touchend', handleAndroidTouchEnd, { passive: true });
-                    element.addEventListener('touchcancel', handleAndroidTouchCancel, { passive: true });
-                });
-            }
-        }
-
-        // Android-specific touch handlers
-        function handleAndroidTouchStart(e) {
-            // Prevent default only for non-interactive elements
-            if (!e.target.closest('a, button, input, textarea')) {
-                e.preventDefault();
-            }
-            this.classList.add('mobile-hover');
-        }
-
-        function handleAndroidTouchEnd(e) {
-            // Android-specific delay for better visual feedback
-            setTimeout(() => {
-                this.classList.remove('mobile-hover');
-            }, 150);
-        }
-
-        function handleAndroidTouchCancel(e) {
-            this.classList.remove('mobile-hover');
-        }
-
-        // Initialize Android optimizations
-        optimizeForAndroid();
 
 
 
