@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#fafafa">
+    <meta name="msapplication-navbutton-color" content="#fafafa">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Yassein Mahmoud - Portfolio</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,6 +24,7 @@
             background-color: #fafafa;
             position: relative;
             overflow-x: hidden;
+            color-scheme: light;
         }
 
         /* Decorative Background Elements */
@@ -350,10 +355,14 @@
         }
 
         .logo-image-btn:hover,
-        .logo-image-btn:active,
-        .logo-image-btn.mobile-hover {
+        .logo-image-btn:active {
             transform: scale(1.1);
             box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .logo-image-btn.mobile-hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
         .logo-image-btn:hover .logo-image,
@@ -386,9 +395,13 @@
         }
 
         .logo:hover,
-        .logo:active,
-        .logo.mobile-hover {
+        .logo:active {
             color: #007bff;
+        }
+
+        .logo.mobile-hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
         .logo:hover .logo-text,
@@ -886,6 +899,175 @@
             font-size: 0.9rem;
         }
 
+        /* Certificates */
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Desktop: Balanced layout for certificates grid */
+        @media (min-width: 769px) {
+            .certificates-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+                max-width: 1000px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .certificate-card {
+            background: white;
+            padding: 1.5rem;
+            padding-bottom: 7rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        .certificate-card:hover,
+        .certificate-card:active,
+        .certificate-card.mobile-hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+            border-color: rgba(0, 123, 255, 0.2);
+        }
+
+        .certificate-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .certificate-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .certificate-issuer {
+            color: #007bff;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .certificate-date {
+            color: #666;
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-bottom: 0.8rem;
+            text-align: center;
+        }
+
+        .certificate-description {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .certificate-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .certificate-tag {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .certificate-tag:hover {
+            background: rgba(0, 123, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Certificate Button */
+        .certificate-button-container {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .certificate-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #007bff;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(0, 123, 255, 0.12);
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+            z-index: 15;
+            pointer-events: auto;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .certificate-btn:hover {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+        }
+
+        .certificate-btn:active {
+            background: #007bff;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        .certificate-btn:focus {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+            outline: none;
+        }
+
+        .certificate-btn .btn-icon {
+            font-size: 1rem;
+        }
+
+        .certificate-btn .btn-text {
+            font-size: 0.9rem;
+        }
+
         /* Education */
         .education-content {
             max-width: 600px;
@@ -1240,6 +1422,9 @@
 
             .mobile-menu-toggle {
                 display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
             }
 
             .logo-image {
@@ -1617,11 +1802,15 @@
         }
 
         .submit-btn:hover,
-        .submit-btn:active,
-        .submit-btn.mobile-hover {
+        .submit-btn:active {
             background: linear-gradient(135deg, #0056b3, #004085);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .submit-btn.mobile-hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
         .submit-btn:active {
@@ -1657,6 +1846,11 @@
             }
 
             .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .certificates-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
@@ -1718,13 +1912,13 @@
             }
 
             /* Improve touch targets */
-            .project-btn, .social-btn, .submit-btn, .mobile-menu-toggle {
+            .project-btn, .certificate-btn, .social-btn, .submit-btn, .mobile-menu-toggle {
                 min-height: 44px;
                 min-width: 44px;
             }
 
             /* Independent button controls on mobile */
-            .project-btn {
+            .project-btn, .certificate-btn {
                 min-height: 48px;
                 min-width: 120px;
                 -webkit-tap-highlight-color: rgba(0, 123, 255, 0.3);
@@ -1793,17 +1987,25 @@
 
             /* Reduce animation complexity on mobile */
             .experience-card:hover,
+            .certificate-card:hover,
             .education-item:hover,
             .skill-category:hover,
             .language-card:hover,
             .contact-info:hover,
-            .map-container:hover {
+            .map-container:hover,
+            .project-btn:hover,
+            .certificate-btn:hover,
+            .social-btn:hover,
+            .submit-btn:hover,
+            .nav-links a:hover,
+            .mobile-nav-links a:hover {
                 transform: none;
                 box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
             }
 
             /* Only apply hover effects on touch devices when mobile-hover class is present */
             .experience-card.mobile-hover,
+            .certificate-card.mobile-hover,
             .education-item.mobile-hover,
             .skill-category.mobile-hover,
             .language-card.mobile-hover,
@@ -1812,11 +2014,142 @@
                 transform: translateY(-3px);
                 box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
             }
+
+            /* Button mobile-hover effects - matching experience cards */
+            .project-btn.mobile-hover,
+            .certificate-btn.mobile-hover,
+            .social-btn.mobile-hover,
+            .submit-btn.mobile-hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+            }
+
+            .nav-links a.mobile-hover,
+            .mobile-nav-links a.mobile-hover,
+            .contact-link.mobile-hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
+            }
         }
 
         /* Smooth Scrolling */
         html {
             scroll-behavior: smooth;
+            color-scheme: light;
+        }
+
+        /* Force light mode on all elements */
+        * {
+            color-scheme: light !important;
+        }
+
+        /* Override any dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #fafafa !important;
+                color: #333 !important;
+            }
+            
+            html {
+                background-color: #fafafa !important;
+                color: #333 !important;
+            }
+            
+            * {
+                background-color: inherit !important;
+                color: inherit !important;
+            }
+        }
+
+        /* Android-specific optimizations */
+        @supports (-webkit-touch-callout: none) {
+            /* iOS-specific styles - keep existing behavior */
+        }
+
+        @supports not (-webkit-touch-callout: none) {
+            /* Android-specific styles */
+            body {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-rendering: optimizeLegibility;
+            }
+
+            /* Ensure smooth scrolling on Android */
+            html {
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Android touch optimizations */
+            * {
+                -webkit-tap-highlight-color: transparent;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                touch-action: manipulation;
+            }
+
+            /* Allow text selection for form inputs on Android */
+            input, textarea {
+                -webkit-user-select: text;
+                -moz-user-select: text;
+                -ms-user-select: text;
+                user-select: text;
+            }
+
+            /* Android-specific button optimizations */
+            .project-btn, .certificate-btn, .social-btn, .submit-btn, .mobile-menu-toggle {
+                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
+                touch-action: manipulation;
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Android-specific card optimizations */
+            .experience-card, .certificate-card, .education-item, .skill-category, .language-card, .contact-info, .map-container {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+
+            /* Android-specific navigation optimizations */
+            .nav-links a, .mobile-nav-links a, .contact-link {
+                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
+                touch-action: manipulation;
+            }
+
+            /* Android-specific logo optimizations */
+            .logo, .logo-image-btn {
+                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
+                touch-action: manipulation;
+            }
+
+            /* Android-specific visual improvements */
+            .mobile-menu-toggle span {
+                background: #333 !important;
+            }
+
+            .mobile-menu-toggle.active span {
+                background: #007bff !important;
+            }
+
+            /* Android-specific form improvements */
+            .form-group input:focus,
+            .form-group textarea:focus {
+                border-color: #007bff !important;
+                background: white !important;
+                box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1) !important;
+            }
+
+            /* Android-specific button improvements */
+            .project-btn:active,
+            .certificate-btn:active,
+            .social-btn:active,
+            .submit-btn:active {
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4) !important;
+            }
         }
     </style>
 </head>
@@ -1869,6 +2202,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#education">Education</a></li>
                     <li><a href="#experience">Experience</a></li>
+                    <li><a href="#certificates">Certificates</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -1884,6 +2218,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#education">Education</a></li>
                     <li><a href="#experience">Experience</a></li>
+                    <li><a href="#certificates">Certificates</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -1968,6 +2303,39 @@
                             <li>Specialized in automotive photography and online car sales</li>
                             <li>Gained hands-on experience in entrepreneurship, customer engagement, and digital marketing</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates -->
+    <section id="certificates">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-header">
+                    <span class="section-emoji">🏆</span>
+                    <h2 class="section-title">Certificates</h2>
+                    <p class="section-subtitle">My achievements and qualifications</p>
+                </div>
+                <div class="certificates-grid">
+                    <div class="certificate-card">
+                        <div class="certificate-icon">🏆</div>
+                        <h3 class="certificate-title">Certificate of Recognition</h3>
+                        <p class="certificate-issuer">Tamam</p>
+                        <p class="certificate-date">August 17, 2025</p>
+                        <p class="certificate-description">Awarded by Tamam (FZC) for contributions in developing data collection pipelines, organizing vendor information, and improving backend database efficiency for the Tamam App.</p>
+                        <div class="certificate-tags">
+                            <span class="certificate-tag">Data Collection</span>
+                            <span class="certificate-tag">Database</span>
+                            <span class="certificate-tag">Backend</span>
+                        </div>
+                        <div class="certificate-button-container">
+                            <a href="certificates/Tamam Certificate.pdf" download class="certificate-btn">
+                                <span class="btn-icon">📄</span>
+                                <span class="btn-text">Certificate</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2292,6 +2660,7 @@
             const homeSection = document.getElementById('home');
             const educationSection = document.getElementById('education');
             const experienceSection = document.getElementById('experience');
+            const certificatesSection = document.getElementById('certificates');
             const projectsSection = document.getElementById('projects');
             const skillsSection = document.getElementById('skills');
             const contactSection = document.getElementById('contact');
@@ -2301,8 +2670,10 @@
                 current = 'home';
             } else if (scrollPosition >= educationSection.offsetTop - 100 && scrollPosition < experienceSection.offsetTop - 100) {
                 current = 'education';
-            } else if (scrollPosition >= experienceSection.offsetTop - 100 && scrollPosition < projectsSection.offsetTop - 100) {
+            } else if (scrollPosition >= experienceSection.offsetTop - 100 && scrollPosition < certificatesSection.offsetTop - 100) {
                 current = 'experience';
+            } else if (scrollPosition >= certificatesSection.offsetTop - 100 && scrollPosition < projectsSection.offsetTop - 100) {
+                current = 'certificates';
             } else if (scrollPosition >= projectsSection.offsetTop - 100 && scrollPosition < skillsSection.offsetTop - 100) {
                 current = 'projects';
             } else if (scrollPosition >= skillsSection.offsetTop - 100 && scrollPosition < contactSection.offsetTop - 100) {
@@ -2330,7 +2701,7 @@
         function optimizeMobileTouch() {
             // Only apply touch optimizations on mobile devices
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                const touchElements = document.querySelectorAll('.experience-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn');
+                const touchElements = document.querySelectorAll('.experience-card, .certificate-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn, .certificate-btn');
                 
                 touchElements.forEach(element => {
                     // Remove any existing touch event listeners
@@ -2368,6 +2739,52 @@
 
         // Initialize mobile touch optimization
         optimizeMobileTouch();
+
+        // Android-specific optimizations
+        function optimizeForAndroid() {
+            // Detect Android
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            
+            if (isAndroid) {
+                // Android-specific touch optimizations
+                const androidElements = document.querySelectorAll('.experience-card, .certificate-card, .education-item, .skill-category, .language-card, .contact-info, .map-container, .nav-links a, .mobile-nav-links a, .logo, .contact-link, .submit-btn, .mobile-menu-toggle, .social-btn, .logo-image-btn, .project-btn, .certificate-btn');
+                
+                androidElements.forEach(element => {
+                    // Remove any existing touch event listeners
+                    element.removeEventListener('touchstart', handleAndroidTouchStart);
+                    element.removeEventListener('touchend', handleAndroidTouchEnd);
+                    element.removeEventListener('touchcancel', handleAndroidTouchCancel);
+                    
+                    // Add Android-optimized touch handlers
+                    element.addEventListener('touchstart', handleAndroidTouchStart, { passive: true });
+                    element.addEventListener('touchend', handleAndroidTouchEnd, { passive: true });
+                    element.addEventListener('touchcancel', handleAndroidTouchCancel, { passive: true });
+                });
+            }
+        }
+
+        // Android-specific touch handlers
+        function handleAndroidTouchStart(e) {
+            // Prevent default only for non-interactive elements
+            if (!e.target.closest('a, button, input, textarea')) {
+                e.preventDefault();
+            }
+            this.classList.add('mobile-hover');
+        }
+
+        function handleAndroidTouchEnd(e) {
+            // Android-specific delay for better visual feedback
+            setTimeout(() => {
+                this.classList.remove('mobile-hover');
+            }, 150);
+        }
+
+        function handleAndroidTouchCancel(e) {
+            this.classList.remove('mobile-hover');
+        }
+
+        // Initialize Android optimizations
+        optimizeForAndroid();
 
 
 
@@ -2765,6 +3182,8 @@
 
         // Initialize mobile menu
         initializeMobileMenu();
+
+
 
         // Contact form submission with custom popup
         document.getElementById('contactForm').addEventListener('submit', function(e) {
